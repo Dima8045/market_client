@@ -13,7 +13,7 @@
                             <input type="password" :validate="'required'" name="password" class="form-control" v-model="password" placeholder="Password">
                         </div>
                         <div class="form-group text-center">
-                            <input type="button" id="signin" @click.prevent="signIn()" value="Sign In" class="btn btn-primary py-3 px-5">
+                            <input type="button" id="signin" @click.prevent="submit" value="Sign In" class="btn btn-primary py-3 px-5">
                         </div>
                     </form>
                 </div>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
   export default {
     data () {
       return {
@@ -32,6 +33,15 @@
       }
     },
     mounted () {
+    },
+    methods: {
+      ...mapActions(['login']),
+      submit() {
+        this.login({
+          email: this.email,
+          password: this.password
+        })
+      },
     },
   }
 </script>

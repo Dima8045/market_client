@@ -22,8 +22,10 @@
                     <li class="nav-item"><router-link :to="{ name: 'blog' }" class="nav-link">Blog</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'contact' }" class="nav-link">Contact</router-link></li>
                     <li class="nav-item cta cta-colored"><router-link :to="{ name: 'cart' }" class="nav-link"><span class="icon-shopping_cart"></span>[0]</router-link></li>
-                    <li class="nav-item"><router-link :to="{ name: 'signin' }" class="nav-link">Signin</router-link></li>
-                    <li class="nav-item"><router-link :to="{ name: 'register' }" class="nav-link">Register</router-link></li>
+                    <li class="nav-item" v-if="!getUser.name"><router-link :to="{ name: 'signin' }" class="nav-link">Signin</router-link></li>
+                    <li class="nav-item" v-if="getUser.name"><a href="signout" @click.prevent="logout" class="nav-link">Signout</a></li>
+                    <li class="nav-item" v-if="!getUser.name"><router-link :to="{ name: 'register' }" class="nav-link">Register</router-link></li>
+                    <li class="nav-item" v-if="getUser.name"><span class="nav-link" v-text="getUser.name"></span></li>
                 </ul>
             </div>
         </div>
@@ -31,8 +33,13 @@
 </template>
 
 <script>
+    import { mapGetters, mapActions } from 'vuex'
     export default {
-        mounted() {
-        }
+      mounted() {
+      },
+      computed: mapGetters(['getUser']),
+      methods: {
+          ...mapActions(['logout'])
+      }
     }
 </script>

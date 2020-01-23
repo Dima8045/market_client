@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
 import './assets/styles/main.scss'
 
 Vue.component('header-section', require('./components/sections/Header.vue').default);
@@ -12,6 +13,9 @@ Vue.component('footer-section', require('./components/sections/Footer.vue').defa
 
 
 Vue.config.productionTip = false
+
+axios.defaults.headers.common['Accept'] = 'application/json';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 new Vue({
   router,
