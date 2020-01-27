@@ -25,10 +25,9 @@
                         <div class="ftco-footer-widget mb-4 ml-md-5">
                             <h2 class="ftco-heading-2">Menu</h2>
                             <ul class="list-unstyled">
-                                <li><a href="#" class="py-2 d-block">Shop</a></li>
-                                <li><a href="#" class="py-2 d-block">About</a></li>
-                                <li><a href="#" class="py-2 d-block">Journal</a></li>
-                                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                                <li><router-link :to="{ name: 'shop' }" class="nav-link">Shop</router-link></li>
+                                <li><router-link :to="{ name: 'about' }" class="nav-link">About</router-link></li>
+                                <li><router-link :to="{ name: 'contact' }" class="nav-link">Contact</router-link></li>
                             </ul>
                         </div>
                     </div>
@@ -41,10 +40,6 @@
                                     <li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
                                     <li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
                                     <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-                                </ul>
-                                <ul class="list-unstyled">
-                                    <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                                    <li><a href="#" class="py-2 d-block">Contact</a></li>
                                 </ul>
                             </div>
                         </div>
