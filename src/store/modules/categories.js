@@ -12,13 +12,7 @@ export default {
   },
   actions: {
     fetchCategories(ctx){
-      axios.get(  `${API_BASE_URL}/categories`,
-        {
-          headers: {
-          'Content-Type': 'application/json',
-          "Authorization": "Bearer " + JSON.parse(localStorage.getItem('currentUser')).access_token
-        }
-      }
+      axios.get(  `${API_BASE_URL}/categories`
     ).then(function (response) {
         if (response.status == 200 && typeof response.data !== 'undefined') {
           ctx.commit('updateCategories', response.data)
