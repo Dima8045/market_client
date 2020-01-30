@@ -23,7 +23,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/shop',
+    path: '/shop/:name?',
     name: 'shop',
     component: Shop
   },
