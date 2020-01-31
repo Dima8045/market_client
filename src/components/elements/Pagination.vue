@@ -1,5 +1,5 @@
 <template>
-    <div class="row mt-5">
+    <div class="row mt-5" v-if="getAllProducts().total > getAllProducts().per_page">
         <div class="col text-center">
             <div class="block-27">
                 <ul>

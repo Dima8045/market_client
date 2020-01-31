@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="col-md-6" >
-                            <div v-for="category in getAllCategories().slice(0, 2)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                            <div v-for="category in getCategories().slice(0, 2)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
                                  v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image +')' }">
                                 <div class="text px-3 py-1">
                                     <h2 class="mb-0"><a href="#">{{ category.name}}</a></h2>
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div v-for="category in getAllCategories().slice(2, 4)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                    <div v-for="category in getCategories().slice(2, 4)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
                          v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image +')' }">
                         <div class="text px-3 py-1">
                             <h2 class="mb-0"><a href="#">{{ category.name}}</a></h2>
@@ -48,11 +48,11 @@
       },
       methods: {
         ...mapActions(['fetchCategories']),
-        ...mapGetters(['getAllCategories'])
+        ...mapGetters(['getCategories'])
       },
       mounted() {
         this.fetchCategories()
-        this.getAllCategories()
+        this.getCategories()
       },
     }
 </script>

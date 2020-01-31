@@ -5,7 +5,7 @@
                 <li>
                     <a style="cursor: pointer" @click.prevent="setActiveCategory(0); fetchProducts(0)" :class="{active: getActiveCategory() === 0}">All</a>
                 </li>
-                <li v-for="category in getAllCategories()" :key="category.id">
+                <li v-for="category in getCategories()" :key="category.id">
                     <a style="cursor: pointer" @click.prevent="setActiveCategory(category.id); fetchProducts(category.id)" :class="{active: getActiveCategory() === category.id}">{{ category.name }}</a>
                 </li>
             </ul>
@@ -18,12 +18,13 @@
 
     export default {
       methods: {
-        ...mapActions(['fetchCategories', 'setActiveCategory', 'fetchProducts']),
-        ...mapGetters(['getAllCategories', 'getActiveCategory']),
+        ...mapActions(['fetchCategoriesList', 'setActiveCategory', 'fetchProducts']),
+        ...mapGetters(['getCategories', 'getActiveCategory']),
       },
       mounted () {
-        this.fetchCategories()
-        this.getAllCategories()
+        this.fetchCategoriesList()
+        this.getCategories()
+        console.log(this.getCategories())
       }
     }
 

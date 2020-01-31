@@ -19,6 +19,14 @@ export default {
       axios.get(  `${API_BASE_URL}/categories`
     ).then(function (response) {
         if (response.status == 200 && typeof response.data !== 'undefined') {
+          ctx.commit('updateCategories', response.data)
+        }
+      })
+    },
+    fetchCategoriesList(ctx){
+      axios.get(  `${API_BASE_URL}/categories/list`
+    ).then(function (response) {
+        if (response.status == 200 && typeof response.data !== 'undefined') {
           ctx.commit('updateCategories', response.data.categories)
         }
       })
@@ -28,7 +36,7 @@ export default {
     }
   },
   getters: {
-    getAllCategories(state) {
+    getCategories(state) {
       return state.categories
     },
     getActiveCategory(state){
