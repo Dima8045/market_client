@@ -16,16 +16,21 @@ export default {
     }
   },
   actions: {
-    fetchProducts(ctx){
+    async fetchProducts(ctx){
+      console.log(this.state.categories.activeCategory)
       let uri = this.state.categories.activeCategory !== 0 ? '?category=' + this.state.categories.activeCategory : ''
       uri += this.state.categories.activeCategory !== 0 ? '&perpage=' + this.state.products.perPage : '?perpage=' + this.state.products.perPage
       uri += '&page=' + this.state.products.productsPage
-      axios.get(  `${API_BASE_URL}/products` + uri
-    ).then(function (response) {
-        if (response.status == 200 && typeof response.data !== 'undefined') {
-          ctx.commit('updateProducts', response.data.products)
-        }
-      })
+      const response = await axios.get(  `${API_BASE_URL}/products` + uri)
+      if (response.status == 200 && typeof response.data !== 'undefined') {
+        ctx.commit('updateProducts', response.data.products)
+      }
+
+      // ).then(function (response) {
+        // if (response.status == 200 && typeof response.data !== 'undefined') {
+        //   ctx.commit('updateProducts', response.data.products)
+        // }
+      // })
     },
   },
   getters: {

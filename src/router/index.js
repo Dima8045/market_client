@@ -23,9 +23,10 @@ const routes = [
     component: Home
   },
   {
-    path: '/shop/:name?',
+    path: '/shop/:category?',
     name: 'shop',
-    component: Shop
+    component: Shop,
+    props: true
   },
   {
     path: '/about',

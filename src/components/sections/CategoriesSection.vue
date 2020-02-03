@@ -17,7 +17,7 @@
                             <div v-for="category in getCategories().slice(0, 2)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
                                  v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image +')' }">
                                 <div class="text px-3 py-1">
-                                    <h2 class="mb-0"><a href="#">{{ category.name}}</a></h2>
+                                    <h2 class="mb-0" @click="setActiveCategory(category.id)"><router-link :to="{ name: 'shop', params: {category: category.name.toLowerCase() } }">{{ category.name}}</router-link></h2>
                                 </div>
                             </div>
                         </div>
@@ -26,9 +26,9 @@
 
                 <div class="col-md-4">
                     <div v-for="category in getCategories().slice(2, 4)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
-                         v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image +')' }">
+                         v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image  +')' }">
                         <div class="text px-3 py-1">
-                            <h2 class="mb-0"><a href="#">{{ category.name}}</a></h2>
+                            <h2 class="mb-0" @click="setActiveCategory(category.id) "><router-link :to="{ name: 'shop', params: {category: category.name.toLowerCase() } }" >{{ category.name}}</router-link></h2>
                         </div>
                     </div>
                 </div>
@@ -41,18 +41,13 @@
     import { mapActions, mapGetters } from 'vuex'
 
     export default {
-      data() {
-        return{
-        cats: []
-        }
-      },
       methods: {
-        ...mapActions(['fetchCategories']),
-        ...mapGetters(['getCategories'])
+        ...mapActions(['fetchCategories', 'setActiveCategory', 'fetchProducts']),
+        ...mapGetters(['getCategories']),
       },
-      mounted() {
-        this.fetchCategories()
-        this.getCategories()
-      },
+      async mounted () {
+        await this.fetchCategories()
+        await this.getCategories()
+      }
     }
 </script>

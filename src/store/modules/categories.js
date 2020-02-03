@@ -15,23 +15,19 @@ export default {
     }
   },
   actions: {
-    fetchCategories(ctx){
-      axios.get(  `${API_BASE_URL}/categories`
-    ).then(function (response) {
+    async fetchCategories(ctx){
+      const response = await axios.get(  `${API_BASE_URL}/categories`)
         if (response.status == 200 && typeof response.data !== 'undefined') {
           ctx.commit('updateCategories', response.data)
         }
-      })
-    },
-    fetchCategoriesList(ctx){
-      axios.get(  `${API_BASE_URL}/categories/list`
-    ).then(function (response) {
+       },
+    async fetchCategoriesList(ctx){
+      const response = await axios.get(  `${API_BASE_URL}/categories/list`)
         if (response.status == 200 && typeof response.data !== 'undefined') {
           ctx.commit('updateCategories', response.data.categories)
         }
-      })
-    },
-    setActiveCategory(ctx, id){
+      },
+    async setActiveCategory(ctx, id){
       ctx.commit('updateActiveCategory', id)
     }
   },

@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 col-lg-3 ftco-animate" v-for="product in this.getAllProducts('0').data" :key="product.id">
+        <div class="col-md-6 col-lg-3 ftco-animate" v-for="product in getAllProducts().data" :key="product.id">
             <div class="product">
                 <a href="#" class="img-prod"><img class="img-fluid" :src="product.product_images[0] ? product.image_folder + '/' + product.product_images[0].image : ''" alt="Colorlib Template">
                     <span class="status">30%</span>
@@ -36,19 +36,12 @@
   import { mapGetters, mapActions } from 'vuex'
 
   export default {
-    data() {
-      return {
-        products: [],
-        category: '',
-      }
-    },
     methods: {
       ...mapActions(['fetchProducts']),
-      ...mapGetters(['getAllProducts']),
+      ...mapGetters(['getActiveCategory','getAllProducts']),
     },
     async mounted () {
-      this.fetchProducts()
-      this.getAllProducts()
+      await this.fetchProducts()
     }
   }
 </script>
