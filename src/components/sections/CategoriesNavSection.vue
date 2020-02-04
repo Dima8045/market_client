@@ -22,7 +22,6 @@
         ...mapGetters(['getCategories', 'getActiveCategory']),
       },
       mounted () {
-        this.fetchCategoriesList()
         this.getCategories()
       }
     }
