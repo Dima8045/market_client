@@ -4,7 +4,7 @@ import API_BASE_URL from '../config'
 export default {
   state: {
     products: {},
-    perPage: 1,
+    perPage: 4,
     productsPage: 1,
   },
   mutations: {
@@ -17,7 +17,6 @@ export default {
   },
   actions: {
     async fetchProducts(ctx){
-      console.log(this.state.categories.activeCategory)
       let uri = this.state.categories.activeCategory !== 0 ? '?category=' + this.state.categories.activeCategory : ''
       uri += this.state.categories.activeCategory !== 0 ? '&perpage=' + this.state.products.perPage : '?perpage=' + this.state.products.perPage
       uri += '&page=' + this.state.products.productsPage
@@ -25,12 +24,6 @@ export default {
       if (response.status == 200 && typeof response.data !== 'undefined') {
         ctx.commit('updateProducts', response.data.products)
       }
-
-      // ).then(function (response) {
-        // if (response.status == 200 && typeof response.data !== 'undefined') {
-        //   ctx.commit('updateProducts', response.data.products)
-        // }
-      // })
     },
   },
   getters: {

@@ -4,7 +4,7 @@ import API_BASE_URL from '../config'
 export default {
   state: {
     categories: [],
-    activeCategory: 0,
+    activeCategory: JSON.parse(localStorage.getItem('activeCategory')) || 0,
   },
   mutations: {
     updateCategories(state, categories){
@@ -12,6 +12,7 @@ export default {
     },
     updateActiveCategory(state, id){
       state.activeCategory = id
+      localStorage.setItem('activeCategory', JSON.stringify(state.activeCategory));
     }
   },
   actions: {

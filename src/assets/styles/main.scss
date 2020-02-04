@@ -2494,3 +2494,8 @@ textarea.form-control {
     stroke-dashoffset: -136px;
   }
 }
+
+.nav-link.active, .dropdown .active {
+  color: #82ae46!important;
+  background: none!important;
+}
