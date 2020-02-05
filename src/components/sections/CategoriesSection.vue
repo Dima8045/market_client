@@ -14,7 +14,7 @@
                             </div>
                         </div>
                         <div class="col-md-6" >
-                            <div v-for="category in getCategories().slice(0, 2)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                            <div v-for="category in categories.slice(0, 2)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
                                  v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image +')' }">
                                 <div class="text px-3 py-1">
                                     <router-link :to="{ name: 'shop', params: {category: category.name.toLowerCase() } }"><h2 class="mb-0 text-light" @click="setActiveCategory(category.id)">{{ category.name}}</h2></router-link>
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div v-for="category in getCategories().slice(2, 4)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                    <div v-for="category in categories.slice(2, 4)" :key="category.id" class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
                          v-bind:style="{ 'background-image': 'url(' + category.image_folder + '/' + category.category_images[0].image  +')' }">
                         <div class="text px-3 py-1">
                             <router-link :to="{ name: 'shop', params: {category: category.name.toLowerCase() } }"><h2 class="mb-0 text-light" @click="setActiveCategory(category.id)">{{ category.name}}</h2></router-link>
@@ -41,13 +41,18 @@
     import { mapActions, mapGetters } from 'vuex'
 
     export default {
+      data() {
+        return {
+          categories: []
+        }
+      },
       methods: {
         ...mapActions(['fetchCategories', 'setActiveCategory', 'fetchProducts']),
         ...mapGetters(['getCategories']),
       },
       async mounted () {
         await this.fetchCategories()
-        await this.getCategories()
+        this.categories = this.getCategories()
       }
     }
 </script>
