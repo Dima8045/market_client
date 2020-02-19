@@ -34,12 +34,12 @@ export default {
   },
   actions: {
     addToWishes(ctx, product = {}){
-      if (typeof product.id !== 'undefined' && typeof product.quantity != 'undefined') {
+      if (typeof product.id !== 'undefined') {
         ctx.commit('addWish', product)
       }
     },
     removeFromWishes(ctx, product = {}){
-      if (typeof product.id !== 'undefined' && typeof product.quantity != 'undefined') {
+      if (typeof product.id !== 'undefined') {
         ctx.commit('removeWish', product)
       }
     },
