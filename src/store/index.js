@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import users from './modules/users'
 import categories from './modules/categories'
 import products from './modules/products'
+import wishlist from './modules/wishlist'
 
 Vue.use(Vuex)
 
@@ -12,5 +13,6 @@ export default new Vuex.Store({
     users,
     categories,
     products,
+    wishlist,
   },
 })

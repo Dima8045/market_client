@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import VAnimateCss from 'v-animate-css';
 import './assets/styles/main.scss'
 
 Vue.component('header-section', require('./components/sections/Header.vue').default);
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
+Vue.use(VAnimateCss);
 
 new Vue({
   router,

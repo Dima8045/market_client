@@ -155,11 +155,17 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
     data() {
       return {
         heroTitle: 'My Wishlist',
       }
+    },
+    methods: {
+      ...mapActions(['fetchCategoriesList', 'setActiveCategory', 'fetchProducts']),
+      ...mapGetters(['getWishes']),
     },
     mounted() {
         }

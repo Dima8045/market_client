@@ -25,6 +25,12 @@ export default {
         ctx.commit('updateProducts', response.data.products)
       }
     },
+    async fetchProductsByIds(ids){
+      const response = await axios.post(  `${API_BASE_URL}/products`, ids)
+      if (response.status == 200 && typeof response.data !== 'undefined') {
+        return  response.data.products
+      }
+    },
   },
   getters: {
     getAllProducts(state) {
