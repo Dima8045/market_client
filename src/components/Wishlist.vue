@@ -17,8 +17,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="text-center" v-for="product in getProductsByIds(getWishes())" :key="product.id">
-                                    <td class="image-prod"><img class="img" :src="product.product_images[0] ? product.image_folder + '/' + product.product_images[0].image : ''"></td>
+                                <tr class="text-center" v-for="product in products" :key="product.id">
+                                    <td class="image-prod"><img class="img" v-if="product.product_images && product.product_images.length > 0" :src=" product.image_folder + '/' + product.product_images[0].image "></td>
 
                                     <td class="product-name">
                                         <h3>{{ product.name }}</h3>
@@ -27,7 +27,7 @@
 
                                     <td class="price">${{ product.price }}</td>
 
-                                    <td class="product-remove"><a @click="addToWishes({id:product.id})"><span class="ion-ios-close"></span></a></td>
+                                    <td class="product-remove"><a @click="removeWish({id:product.id}), fetchProductsByIds(getWishes())"><span class="ion-ios-close"></span></a></td>
 
                                 </tr><!-- END TR-->
                                 </tbody>
@@ -41,22 +41,31 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
+  import { mapGetters, mapActions, mapMutations } from 'vuex'
 
   export default {
     data() {
       return {
         heroTitle: 'My Wishlist',
-        products: [],
-        quantity: 1,
+      }
+    },
+    computed: {
+      products: {
+        get: function () {
+          return this.$store.getters.getProductsByIds
+        },
+        set: function () {
+          return []
+        }
       }
     },
     methods: {
       ...mapActions(['addToWishes', 'fetchProductsByIds']),
-      ...mapGetters(['getWishes', 'getProductsByIds']),
+      ...mapGetters(['getWishes']),
+      ...mapMutations(['removeWish']),
     },
-    mounted() {
-      this.fetchProductsByIds(this.getWishes())
+    async mounted() {
+      await this.fetchProductsByIds(this.getWishes())
       }
     }
 </script>
