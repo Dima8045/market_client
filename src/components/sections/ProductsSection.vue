@@ -18,7 +18,7 @@
                             <a href="#" class="product-action add-to-cart d-flex justify-content-center align-items-center text-center">
                                 <span><i class="ion-ios-menu"></i></span>
                             </a>
-                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToCart({product})" class="product-action buy-now d-flex justify-content-center align-items-center mx-1">
+                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToCart(product)" class="product-action buy-now d-flex justify-content-center align-items-center mx-1">
                                 <span><i class="ion-ios-cart"></i></span>
                             </a>
                             <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToWishes({id:product.id})"  class="heart d-flex justify-content-center align-items-center">
