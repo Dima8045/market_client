@@ -33,7 +33,7 @@ export default {
     }
   },
   actions: {
-    addToWishes(ctx, product = {}){
+    addToWishes(ctx, product){
       if (typeof product.id !== 'undefined') {
         ctx.commit('addWish', product)
       }

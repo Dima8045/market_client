@@ -2499,3 +2499,14 @@ textarea.form-control {
   color: #82ae46!important;
   background: none!important;
 }
+
+.image-prod img {
+  width: auto!important;
+}
+
+.product-short-desc {
+  white-space: nowrap;
+  width: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

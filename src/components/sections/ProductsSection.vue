@@ -21,7 +21,7 @@
                             <a href="#" class="product-action buy-now d-flex justify-content-center align-items-center mx-1">
                                 <span><i class="ion-ios-cart"></i></span>
                             </a>
-                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToWishes(product)"  class="heart d-flex justify-content-center align-items-center">
+                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToWishes({id:product.id})"  class="heart d-flex justify-content-center align-items-center">
                                 <span><i class="ion-ios-heart"></i></span>
                             </a>
                         </div>

@@ -10,139 +10,25 @@
                             <table class="table">
                                 <thead class="thead-primary">
                                 <tr class="text-center">
+                                    <th>Action</th>
                                     <th>&nbsp;</th>
-                                    <th>Product List</th>
-                                    <th>&nbsp;</th>
+                                    <th>Description</th>
                                     <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-1.jpg);"></div></td>
+                                <tr class="text-center" v-for="product in getProductsByIds(getWishes())" :key="product.id">
+                                    <td class="image-prod"><img class="img" :src="product.product_images[0] ? product.image_folder + '/' + product.product_images[0].image : ''"></td>
 
                                     <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
+                                        <h3>{{ product.name }}</h3>
+                                        <p class="product-short-desc">{{ product.description }}</p>
                                     </td>
 
-                                    <td class="price">$4.90</td>
+                                    <td class="price">${{ product.price }}</td>
 
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
+                                    <td class="product-remove"><a @click="addToWishes({id:product.id})"><span class="ion-ios-close"></span></a></td>
 
-                                    <td class="total">$4.90</td>
-                                </tr><!-- END TR-->
-
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-2.jpg);"></div></td>
-
-                                    <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
-                                    </td>
-
-                                    <td class="price">$15.70</td>
-
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-
-                                    <td class="total">$15.70</td>
-                                </tr><!-- END TR-->
-
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
-
-                                    <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
-                                    </td>
-
-                                    <td class="price">$15.70</td>
-
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-
-                                    <td class="total">$15.70</td>
-                                </tr><!-- END TR-->
-
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-
-                                    <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
-                                    </td>
-
-                                    <td class="price">$15.70</td>
-
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-
-                                    <td class="total">$15.70</td>
-                                </tr><!-- END TR-->
-
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-5.jpg);"></div></td>
-
-                                    <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
-                                    </td>
-
-                                    <td class="price">$15.70</td>
-
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-
-                                    <td class="total">$15.70</td>
-                                </tr><!-- END TR-->
-
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-6.jpg);"></div></td>
-
-                                    <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
-                                    </td>
-
-                                    <td class="price">$15.70</td>
-
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                        </div>
-                                    </td>
-
-                                    <td class="total">$15.70</td>
                                 </tr><!-- END TR-->
                                 </tbody>
                             </table>
@@ -161,13 +47,16 @@
     data() {
       return {
         heroTitle: 'My Wishlist',
+        products: [],
+        quantity: 1,
       }
     },
     methods: {
-      ...mapActions(['fetchCategoriesList', 'setActiveCategory', 'fetchProducts']),
-      ...mapGetters(['getWishes']),
+      ...mapActions(['addToWishes', 'fetchProductsByIds']),
+      ...mapGetters(['getWishes', 'getProductsByIds']),
     },
     mounted() {
-        }
+      this.fetchProductsByIds(this.getWishes())
+      }
     }
 </script>
