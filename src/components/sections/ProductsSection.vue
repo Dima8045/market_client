@@ -18,10 +18,14 @@
                             <a href="#" class="product-action add-to-cart d-flex justify-content-center align-items-center text-center">
                                 <span><i class="ion-ios-menu"></i></span>
                             </a>
-                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToCart(product)" class="product-action buy-now d-flex justify-content-center align-items-center mx-1">
+                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToCart(product)"
+                               :class="{'changed-product': changedCart(product.id) }"
+                               class="product-action buy-now d-flex justify-content-center align-items-center mx-1">
                                 <span><i class="ion-ios-cart"></i></span>
                             </a>
-                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToWishes({id:product.id})"  class="heart d-flex justify-content-center align-items-center">
+                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToWishes({id:product.id})"
+                               :class="{'changed-product': changedWish(product.id) }"
+                               class="product-action heart d-flex justify-content-center align-items-center">
                                 <span><i class="ion-ios-heart"></i></span>
                             </a>
                         </div>
@@ -39,7 +43,25 @@
     methods: {
       ...mapMutations(['addToCart', 'addToWishes']),
       ...mapActions(['fetchProducts']),
-      ...mapGetters(['getActiveCategory','getAllProducts']),
+      ...mapGetters(['getActiveCategory','getAllProducts', 'getCart', 'getWishes']),
+      changedCart: function (id) {
+        let isActive = false
+        this.getCart().forEach(function (value) {
+          if (value.id == id){
+            isActive = true;
+          }
+        })
+        return isActive
+      },
+      changedWish: function (id) {
+        let isActive = false
+        this.getWishes().forEach(function (value) {
+          if (value.id == id){
+            isActive = true;
+          }
+        })
+        return isActive
+      }
     },
     async mounted () {
       await this.fetchProducts()
