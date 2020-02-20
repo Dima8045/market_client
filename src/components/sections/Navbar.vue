@@ -18,7 +18,7 @@
                     <li class="nav-item"><router-link :to="{ name: 'about' }" exact class="nav-link">About</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'blog' }" exact class="nav-link">Blog</router-link></li>
                     <li class="nav-item"><router-link :to="{ name: 'contact' }" exact class="nav-link">Contact</router-link></li>
-                    <li class="nav-item cta cta-colored"><router-link :to="{ name: 'cart' }" exact class="nav-link"><span class="icon-shopping_cart"></span>[0]</router-link></li>
+                    <li class="nav-item cta cta-colored"><router-link :to="{ name: 'cart' }" exact class="nav-link"><span class="icon-shopping_cart"></span>[{{ cart }}]</router-link></li>
                     <li class="nav-item" v-if="!getUser.name"><router-link :to="{ name: 'signin' }" class="nav-link">Signin</router-link></li>
                     <li class="nav-item" v-if="getUser.name"><a href="signout" @click.prevent="logout" class="nav-link">Signout</a></li>
                     <li class="nav-item" v-if="!getUser.name"><router-link :to="{ name: 'register' }" class="nav-link">Register</router-link></li>
@@ -44,9 +44,20 @@
         },
       mounted() {
       },
-      computed: mapGetters(['getUser']),
+      computed: {
+        ...mapGetters(['getUser']),
+        cart: {
+          get: function () {
+            return this.$store.getters.getCountCart
+          },
+          set: function () {
+            return []
+          }
+        }
+
+      },
       methods: {
-          ...mapActions(['logout', 'setActiveCategory']),
+          ...mapActions(['logout', 'setActiveCategory', 'getCountCart']),
           activeDropdown(item){
               this.activeDropdownItem = item
           }

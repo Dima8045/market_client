@@ -3,7 +3,7 @@ export default {
     wishList: JSON.parse(localStorage.getItem('wishList')) ? JSON.parse(localStorage.getItem('wishList')) : [],
   },
   mutations: {
-    addWish(state, product) {
+    addToWishes(state, product) {
       let foundWish = state.wishList.findIndex(function (el) {
         return el.id === product.id
       })
@@ -21,13 +21,6 @@ export default {
       if(foundWish >= 0) {
         state.wishList.splice(foundWish, 1)
         localStorage.setItem('wishList', JSON.stringify(state.wishList))
-      }
-    },
-  },
-  actions: {
-    addToWishes(ctx, product){
-      if (typeof product.id !== 'undefined') {
-        ctx.commit('addWish', product)
       }
     },
   },

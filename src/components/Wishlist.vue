@@ -10,10 +10,10 @@
                             <table class="table">
                                 <thead class="thead-primary">
                                 <tr class="text-center">
-                                    <th>Action</th>
-                                    <th>&nbsp;</th>
+                                    <th>Image</th>
                                     <th>Description</th>
                                     <th>Price</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -27,7 +27,15 @@
 
                                     <td class="price">${{ product.price }}</td>
 
-                                    <td class="product-remove"><a @click="removeWish({id:product.id}), fetchProductsByIds(getWishes())"><span class="ion-ios-close"></span></a></td>
+                                    <td class="product-remove">
+                                        <a @click="removeWish({id:product.id}), fetchProductsByIds(getWishes())">
+                                            <span class="ion-ios-close"></span>
+                                        </a>
+                                        &nbsp;
+                                        <a @click="addToCart(product)">
+                                            <span class="ion-ios-cart"></span>
+                                        </a>
+                                    </td>
 
                                 </tr><!-- END TR-->
                                 </tbody>
@@ -62,7 +70,7 @@
     methods: {
       ...mapActions(['addToWishes', 'fetchProductsByIds']),
       ...mapGetters(['getWishes']),
-      ...mapMutations(['removeWish']),
+      ...mapMutations(['removeWish', 'addToCart']),
     },
     async mounted() {
       await this.fetchProductsByIds(this.getWishes())

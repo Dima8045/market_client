@@ -4,6 +4,7 @@ import users from './modules/users'
 import categories from './modules/categories'
 import products from './modules/products'
 import wishlist from './modules/wishlist'
+import cart from './modules/cart'
 
 Vue.use(Vuex)
 
@@ -14,5 +15,6 @@ export default new Vuex.Store({
     categories,
     products,
     wishlist,
+    cart
   },
 })
