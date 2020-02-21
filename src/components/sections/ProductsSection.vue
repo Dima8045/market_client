@@ -18,7 +18,7 @@
                             <a href="#" class="product-action add-to-cart d-flex justify-content-center align-items-center text-center">
                                 <span><i class="ion-ios-menu"></i></span>
                             </a>
-                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToCart(product)"
+                            <a style="cursor: pointer" v-animate-css.click="'bounceIn'" @click="addToCart({id:product.id})"
                                :class="{'changed-product': changedCart(product.id) }"
                                class="product-action buy-now d-flex justify-content-center align-items-center mx-1">
                                 <span><i class="ion-ios-cart"></i></span>

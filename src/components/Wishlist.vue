@@ -32,7 +32,7 @@
                                             <span class="ion-ios-close"></span>
                                         </a>
                                         &nbsp;
-                                        <a @click="addToCart(product)">
+                                        <a @click="addToCart({id:product.id})" :class="{'changed-product': changedCart(product.id) }">
                                             <span class="ion-ios-cart"></span>
                                         </a>
                                     </td>
@@ -69,8 +69,18 @@
     },
     methods: {
       ...mapActions(['addToWishes', 'fetchProductsByIds']),
-      ...mapGetters(['getWishes']),
+      ...mapGetters(['getWishes', 'getCart']),
       ...mapMutations(['removeWish', 'addToCart']),
+      changedCart: function (id) {
+        let isActive = false
+        this.getCart().forEach(function (value) {
+          if (value.id == id){
+            isActive = true;
+          }
+        })
+        return isActive
+      },
+
     },
     async mounted() {
       await this.fetchProductsByIds(this.getWishes())
