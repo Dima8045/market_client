@@ -6,83 +6,85 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-7 ftco-animate">
-                        <form action="#" class="billing-form">
+                        <form id="billing-form" class="billing-form">
                             <h3 class="mb-4 billing-heading">Billing Details</h3>
                             <div class="row align-items-end">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="firstname">Firt Name</label>
-                                        <input type="text" id="firstname" class="form-control" placeholder="">
+                                        <label for="first_name">Firt Name</label>
+                                        <input type="text" id="first_name" v-model="firstName" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="lastname">Last Name</label>
-                                        <input type="text" id="lastname" class="form-control" placeholder="">
+                                        <label for="last_name">Last Name</label>
+                                        <input type="text" id="last_name" v-model="lastName" class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="country">State / Country</label>
+                                        <label for="address">Address</label>
                                         <div class="select-wrap">
                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                            <select name="" id="country" class="form-control">
-                                                <option value="">France</option>
-                                                <option value="">Italy</option>
-                                                <option value="">Philippines</option>
-                                                <option value="">South Korea</option>
-                                                <option value="">Hongkong</option>
-                                                <option value="">Japan</option>
-                                            </select>
+                                            <input type="text" id="address" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="streetaddress">Street Address</label>
-                                        <input type="text" id="streetaddress" class="form-control" placeholder="House number and street name">
+                                        <label for="country">Country</label>
+                                        <div class="select-wrap">
+                                            <div class="icon"></div>
+                                            <input type="text" id="country" class="form-control" v-model="country">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
+                                        <label for="state">State / Region</label>
+                                        <div class="select-wrap">
+                                            <div class="icon"></div>
+                                            <input type="text" id="state" class="form-control" v-model="state" disabled>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="towncity">Town / City</label>
-                                        <input type="text" id="towncity" class="form-control" placeholder="">
+                                        <label for="street">Street Address</label>
+                                        <input type="text" id="street" class="form-control" placeholder="Street name" v-model="street" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" v-model="houseNumber" placeholder="House number">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" v-model="apartment" placeholder="Apartment, suite, unit etc: (optional)">
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city">Town / City</label>
+                                        <input type="text" id="city"  class="form-control" placeholder="" v-model="city" disabled required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="postcodezip">Postcode / ZIP *</label>
-                                        <input type="text" id="postcodezip" class="form-control" placeholder="">
+                                        <label for="postal_code">Postcode / ZIP *</label>
+                                        <input type="text" id="postal_code" class="form-control" placeholder="" v-model="postalCode" required>
                                     </div>
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="phone">Phone</label>
-                                        <input type="text" id="phone" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email Address</label>
-                                        <input type="text" id="email" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-12">
-                                    <div class="form-group mt-4">
-                                        <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-                                            <label><input type="radio" name="optradio"> Ship to different address</label>
-                                        </div>
+                                        <input type="tel" id="phone" class="form-control" placeholder="" v-model="phone" required>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +145,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
+                                    <p><button @click="storeBillingDetails()" class="btn btn-primary py-3 px-4">Place an order</button></p>
                                 </div>
                             </div>
                         </div>
@@ -159,9 +161,82 @@
     data() {
       return {
         heroTitle: 'Checkout',
+        firstName: '',
+        lastName: '',
+        country: '',
+        state: '',
+        city: '',
+        street: '',
+        houseNumber: '',
+        apartment: '',
+        phone: '',
+        postalCode: '',
+      }
+    },
+    methods: {
+      initMap: function () {
+
+        var input = document.getElementById('address');
+        var options = {
+          types: ['address'],
+          componentRestrictions: { country: 'ua' },
+        };
+
+        let autocomplete = new window.google.maps.places.Autocomplete(input, options);
+
+        window.google.maps.event.addListener(autocomplete, 'place_changed', () => {
+          let place = autocomplete.getPlace()
+          if (typeof place.address_components != 'undefined') {
+            console.log(place.address_components)
+            typeof place.address_components.map((item) => {
+              switch (item.types[0]) {
+                case 'route': this.street = item.short_name
+                  break
+                case 'locality': this.city = item.short_name
+                  break
+                case 'administrative_area_level_1': this.state = item.short_name
+                  break
+                case 'sublocality_level_1': this.state += this.state + ', ' + item.short_name
+                  break
+                case 'country': this.country = item.long_name
+                  break
+                case 'postal_code': this.postalCode = item.short_name
+                  break
+                default : ''
+                  break
+              }
+            })
+          } else {
+            let placeArr = place.name.split(',')
+            this.postalCode = ''
+            this.street = placeArr[0]
+            this.city = placeArr[1]
+            this.state = placeArr.length === 4 ? placeArr[2] : ''
+            this.country = placeArr.length === 3 ? placeArr[2] : placeArr.length === 4 && placeArr[3]
+          }
+
+          console.log(autocomplete.getPlace())
+        });
+      },
+
+      storeBillingDetails: function() {
+        let form = {
+          first_name: this.firstName,
+          last_name: this.lastName,
+          country: this.country,
+          state: this.state,
+          city: this.city,
+          street: this.street,
+          house_number: this.houseNumber,
+          apartment: this.apartment,
+          phone: this.phone,
+          postalCode: this.postalCode,
+        }
+        console.log(form)
       }
     },
     mounted() {
-        }
+      this.initMap()
     }
+}
 </script>
