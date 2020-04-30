@@ -7,58 +7,44 @@
                 <div class="row">
                     <div class="col-md-12 ftco-animate">
                         <div class="cart-list">
-                            <table class="table">
+                            <table v-if="!!getAllProducts()" class="table">
                                 <thead class="thead-primary">
                                 <tr class="text-center">
-                                    <th>&nbsp;</th>
-                                    <th>&nbsp;</th>
-                                    <th>Product name</th>
+                                    <th>Image</th>
+                                    <th>Product</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+                                <tr class="text-center" v-for="cart in getCart" :key="cart.id">
+                                    <td class="image-prod">
+                                        <div v-if="typeof (getProductById()(cart.id).product_images) != 'undefined' && getProductById()(cart.id).product_images.length > 0">
 
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
-
-                                    <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
-                                    </td>
-
-                                    <td class="price">$4.90</td>
-
-                                    <td class="quantity">
-                                        <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                        <img class="img" :src=" getProductById()(cart.id).image_folder + '/' + getProductById()(cart.id).product_images[0].image ">
                                         </div>
                                     </td>
-
-                                    <td class="total">$4.90</td>
-                                </tr><!-- END TR-->
-
-                                <tr class="text-center">
-                                    <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-                                    <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-
                                     <td class="product-name">
-                                        <h3>Bell Pepper</h3>
-                                        <p>Far far away, behind the word mountains, far from the countries</p>
+                                        {{ getProductById(cart.id).name }}
                                     </td>
 
-                                    <td class="price">$15.70</td>
-
+                                    <td class="price">${{ getProductById()(cart.id).price }}</td>
                                     <td class="quantity">
                                         <div class="input-group mb-3">
-                                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                            <input type="number" class="quantity form-control input-number" :value="cart.quantity" min="1" max="100">
                                         </div>
                                     </td>
+                                    <td class="total">$</td>
+                                    <td class="total">$</td>
 
-                                    <td class="total">$15.70</td>
+                                    <td class="product-remove">
+                                        <a @click="addToCart({id:getProductById(cart.id).id})" :class="{'changed-product': true }">
+                                            <span class="ion-ios-close"></span>
+                                        </a>
+                                    </td>
+
                                 </tr><!-- END TR-->
                                 </tbody>
                             </table>
@@ -130,14 +116,78 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions , mapMutations} from 'vuex'
 
   export default {
-    data() {
+    data () {
       return {
         'heroTitle': 'Cart',
+        quantity: null,
+        productTotal: null,
+        products: [],
+        carts: [],
+        cartProds: []
       }
     },
-    mounted() {
+    computed: {
+      ...mapGetters(['getCart']),
+      // productAmount: () => {
+      //   return this.cart.quantity
+      // },
+      // cartProducts: () {
+      //   this.carts.forEach((cart) => {
+      //     for (var i = 0; i < this.products.length; i++){
+      //       if (this.products[i].id == cart.id){
+      //         this.products[i].quantity = cart.quantity
+      //         this.cartProds.push(this.products[i])
+      //       }
+      //     }
+      //   })
+      // },
+      //
+    },
+    updated() {
+      console.log('00000000000', this.products)
+    },
+    methods: {
+      ...mapActions(['fetchProductsByIds']),
+      ...mapGetters(['getAllProducts', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
+      ...mapMutations(['addToCart', 'changeQuantity']),
+      // changedCart: function (id) {
+      //   let isActive = false
+      //   this.getCart().forEach(function (value) {
+      //     if (value.id == id){
+      //       isActive = true;
+      //       console.log(value.id, id)
+      //     }
+      //   })
+      //   console.log(isActive)
+      //   return isActive
+      // },
+      // cartProducts: function () {
+      //   this.carts.forEach((cart) => {
+      //     for (var i = 0; i < this.products.length; i++){
+      //       if (this.products[i].id == cart.id){
+      //         this.products[i].quantity = cart.quantity
+      //         this.cartProds.push(this.products[i])
+      //       }
+      //     }
+      //   })
+      // },
+      getQuantity: function(productId){
+        let cart = this.getCart()
+        for (var i = 0; i < cart.length; i++){
+          if (cart[i].id == productId){
+            this.quantity = cart[i].quantity
+          }
         }
+      },
+    },
+    mounted() {
+      this.fetchProductsByIds(this.getCartProductsIds())
+      // this.carts = this.getCart()
+      this.products = this.getProductsByIds()
+      // console.log(this.products, this.carts)
     }
+  }
 </script>

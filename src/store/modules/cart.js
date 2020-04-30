@@ -15,6 +15,16 @@ export default {
       }
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
+    changeQuantity(state, cartItem)
+    {
+      let foundInCart = state.cart.findIndex(function (el) {
+        return el.id === cartItem.id
+      })
+      if(foundInCart >= 0) {
+        state.cart[foundInCart].quantity = cartItem.quantity
+      }
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
   },
   getters: {
     getCart(state) {
@@ -22,6 +32,9 @@ export default {
     },
     getCountCart(state) {
       return state.cart.length
-    }
+    },
+    getCartProductsIds(state) {
+      return state.cart.map(obj => {return obj.id})
+    },
   }
 }

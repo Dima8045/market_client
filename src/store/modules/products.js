@@ -3,7 +3,8 @@ import API_BASE_URL from '../config'
 
 export default {
   state: {
-    products: {},
+    products: JSON.parse(localStorage.getItem('products')) ? JSON.parse(localStorage.getItem('products')) : [],
+
     perPage: 4,
     productsPage: 1,
   },
@@ -13,7 +14,7 @@ export default {
     },
     updateProductPage(state, productPage){
       state.productsPage = productPage
-    }
+    },
   },
   actions: {
     async fetchProducts(ctx){
@@ -38,6 +39,9 @@ export default {
     },
     getProductsByIds(state) {
       return state.products
+    },
+    getProductById: state => id => {
+      return state.products.find(product => product.id === id)
     }
   }
 }
