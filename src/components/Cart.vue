@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-12 ftco-animate">
                         <div class="cart-list">
-                            <table v-if="!!getAllProducts()" class="table">
+                            <table v-if="!!getAllProducts" class="table">
                                 <thead class="thead-primary">
                                 <tr class="text-center">
                                     <th>Image</th>
@@ -21,26 +21,26 @@
                                 <tbody>
                                 <tr class="text-center" v-for="cart in getCart" :key="cart.id">
                                     <td class="image-prod">
-                                        <div v-if="typeof (getProductById()(cart.id).product_images) != 'undefined' && getProductById()(cart.id).product_images.length > 0">
+                                        <div v-if="getProductById(cart.id) && typeof (getProductById(cart.id).product_images) != 'undefined' && getProductById(cart.id).product_images.length > 0">
 
-                                        <img class="img" :src=" getProductById()(cart.id).image_folder + '/' + getProductById()(cart.id).product_images[0].image ">
+                                        <img class="img" :src=" getProductById(cart.id).image_folder + '/' + getProductById(cart.id).product_images[0].image ">
                                         </div>
                                     </td>
                                     <td class="product-name">
-                                        {{ getProductById(cart.id).name }}
+                                        {{ getProductById(cart.id) && getProductById(cart.id).name }}
                                     </td>
 
-                                    <td class="price">${{ getProductById()(cart.id).price }}</td>
+                                    <td class="price">${{ getProductById(cart.id) && getProductById(cart.id).price }}</td>
                                     <td class="quantity">
                                         <div class="input-group mb-3">
                                             <input type="number" class="quantity form-control input-number" :value="cart.quantity" min="1" max="100">
                                         </div>
                                     </td>
-                                    <td class="total">$</td>
+                                    <td class="total">{{productAmount}}$</td>
                                     <td class="total">$</td>
 
                                     <td class="product-remove">
-                                        <a @click="addToCart({id:getProductById(cart.id).id})" :class="{'changed-product': true }">
+                                        <a @click="addToCart({id:getProductById(cart.id) && getProductById(cart.id).id})" :class="{'changed-product': true }">
                                             <span class="ion-ios-close"></span>
                                         </a>
                                     </td>
@@ -130,10 +130,11 @@
       }
     },
     computed: {
-      ...mapGetters(['getCart']),
-      // productAmount: () => {
-      //   return this.cart.quantity
-      // },
+      ...mapGetters(['getCart', 'getAllProducts', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
+      productAmount: () => {
+        console.log('this.carts', this.carts);
+        return this.carts
+      },
       // cartProducts: () {
       //   this.carts.forEach((cart) => {
       //     for (var i = 0; i < this.products.length; i++){
@@ -151,7 +152,7 @@
     },
     methods: {
       ...mapActions(['fetchProductsByIds']),
-      ...mapGetters(['getAllProducts', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
+      // ...mapGetters(['getAllProducts', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
       ...mapMutations(['addToCart', 'changeQuantity']),
       // changedCart: function (id) {
       //   let isActive = false
@@ -184,9 +185,9 @@
       },
     },
     mounted() {
-      this.fetchProductsByIds(this.getCartProductsIds())
+      this.fetchProductsByIds(this.getCartProductsIds)
       // this.carts = this.getCart()
-      this.products = this.getProductsByIds()
+      this.products = this.getProductsByIds
       // console.log(this.products, this.carts)
     }
   }

@@ -41,6 +41,9 @@ export default {
       return state.products
     },
     getProductById: state => id => {
+
+      console.log(' state.products.',  state.products);
+
       return state.products.find(product => product.id === id)
     }
   }
