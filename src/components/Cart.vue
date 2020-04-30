@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-md-12 ftco-animate">
                         <div class="cart-list">
-                            <table v-if="!!getAllProducts" class="table">
+                            <table v-if="!!getProductsByIds" class="table">
                                 <thead class="thead-primary">
                                 <tr class="text-center">
                                     <th>Image</th>
@@ -30,14 +30,13 @@
                                         {{ getProductById(cart.id) && getProductById(cart.id).name }}
                                     </td>
 
-                                    <td class="price">${{ getProductById(cart.id) && getProductById(cart.id).price }}</td>
+                                    <td class="price">${{ getProductById(cart.id).price }}</td>
                                     <td class="quantity">
                                         <div class="input-group mb-3">
-                                            <input type="number" class="quantity form-control input-number" :value="cart.quantity" min="1" max="100">
+                                            <input type="number" class="quantity form-control input-number" @change="signalChange" :data-id="cart.id" :value="cart.quantity" min="1" max="100">
                                         </div>
                                     </td>
-                                    <td class="total">{{productAmount}}$</td>
-                                    <td class="total">$</td>
+                                    <td class="total">${{ (cart.quantity  *  getProductById(cart.id).price).toFixed(2) }}</td>
 
                                     <td class="product-remove">
                                         <a @click="addToCart({id:getProductById(cart.id) && getProductById(cart.id).id})" :class="{'changed-product': true }">
@@ -126,63 +125,22 @@
         productTotal: null,
         products: [],
         carts: [],
-        cartProds: []
+        cartProds: [],
+        cart: [],
+        price: 0
       }
     },
     computed: {
-      ...mapGetters(['getCart', 'getAllProducts', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
-      productAmount: () => {
-        console.log('this.carts', this.carts);
-        return this.carts
-      },
-      // cartProducts: () {
-      //   this.carts.forEach((cart) => {
-      //     for (var i = 0; i < this.products.length; i++){
-      //       if (this.products[i].id == cart.id){
-      //         this.products[i].quantity = cart.quantity
-      //         this.cartProds.push(this.products[i])
-      //       }
-      //     }
-      //   })
-      // },
-      //
-    },
-    updated() {
-      console.log('00000000000', this.products)
+      ...mapGetters(['getCart', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
     },
     methods: {
       ...mapActions(['fetchProductsByIds']),
-      // ...mapGetters(['getAllProducts', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
       ...mapMutations(['addToCart', 'changeQuantity']),
-      // changedCart: function (id) {
-      //   let isActive = false
-      //   this.getCart().forEach(function (value) {
-      //     if (value.id == id){
-      //       isActive = true;
-      //       console.log(value.id, id)
-      //     }
-      //   })
-      //   console.log(isActive)
-      //   return isActive
-      // },
-      // cartProducts: function () {
-      //   this.carts.forEach((cart) => {
-      //     for (var i = 0; i < this.products.length; i++){
-      //       if (this.products[i].id == cart.id){
-      //         this.products[i].quantity = cart.quantity
-      //         this.cartProds.push(this.products[i])
-      //       }
-      //     }
-      //   })
-      // },
-      getQuantity: function(productId){
-        let cart = this.getCart()
-        for (var i = 0; i < cart.length; i++){
-          if (cart[i].id == productId){
-            this.quantity = cart[i].quantity
-          }
-        }
-      },
+      signalChange: function(evt) {
+        this.$emit("change", evt);
+        // console.log(evt.target.getAttribute('data-id'), evt.target.value)
+        this.changeQuantity({ id: evt.target.getAttribute('data-id'), quantity: evt.target.value})
+      }
     },
     mounted() {
       this.fetchProductsByIds(this.getCartProductsIds)

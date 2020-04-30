@@ -18,7 +18,7 @@ export default {
     changeQuantity(state, cartItem)
     {
       let foundInCart = state.cart.findIndex(function (el) {
-        return el.id === cartItem.id
+        return el.id == cartItem.id
       })
       if(foundInCart >= 0) {
         state.cart[foundInCart].quantity = cartItem.quantity
