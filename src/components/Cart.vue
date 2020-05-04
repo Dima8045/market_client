@@ -138,15 +138,11 @@
       ...mapMutations(['addToCart', 'changeQuantity']),
       signalChange: function(evt) {
         this.$emit("change", evt);
-        // console.log(evt.target.getAttribute('data-id'), evt.target.value)
         this.changeQuantity({ id: evt.target.getAttribute('data-id'), quantity: evt.target.value})
       }
     },
-    mounted() {
+    beforeMount() {
       this.fetchProductsByIds(this.getCartProductsIds)
-      // this.carts = this.getCart()
-      this.products = this.getProductsByIds
-      // console.log(this.products, this.carts)
     }
   }
 </script>

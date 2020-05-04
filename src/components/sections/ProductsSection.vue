@@ -63,8 +63,8 @@
         return isActive
       }
     },
-    async mounted () {
-      await this.fetchProducts()
+    mounted () {
+      this.fetchProducts()
     }
   }
 </script>

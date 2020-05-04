@@ -38,10 +38,10 @@ export default {
       return state.products
     },
     getProductsByIds(state) {
-      return state.products
+      return state.products.data
     },
     getProductById: state => id => {
-      return state.products.find(product => product.id === id)
+      return state.products.data.find(product => product.id === id)
     }
   }
 }
