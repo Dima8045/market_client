@@ -33,10 +33,15 @@
                                     <td class="price">${{ getProductById(cart.id).price }}</td>
                                     <td class="quantity">
                                         <div class="input-group mb-3">
-                                            <input type="number" class="quantity form-control input-number" @change="signalChange" :data-id="cart.id" :value="cart.quantity" min="1" max="100">
+                                            <input type="number" class="quantity form-control input-number"
+                                                   @change="signalChange"
+                                                   :data-id="cart.id"
+                                                   :value="cart.quantity"
+                                                   :data-price="getProductById(cart.id).price"
+                                                   :min="1" max="100">
                                         </div>
                                     </td>
-                                    <td class="total">${{ (cart.quantity  *  getProductById(cart.id).price).toFixed(2) }}</td>
+                                    <td class="total">${{ cart.total }}</td>
 
                                     <td class="product-remove">
                                         <a @click="addToCart({id:getProductById(cart.id) && getProductById(cart.id).id})" :class="{'changed-product': true }">
@@ -58,11 +63,11 @@
                             <form action="#" class="info">
                                 <div class="form-group">
                                     <label for="">Coupon code</label>
-                                    <input type="text" class="form-control text-left px-3" placeholder="">
+                                    <input type="text" class="form-control text-left px-3" placeholder="" v-model="couponCode">
                                 </div>
                             </form>
                         </div>
-                        <p><router-link :to="{ name: 'checkout' }" class="btn btn-primary py-3 px-4">Apply Coupon</router-link></p>
+                        <p><span @click="applyCoupon()" class="btn btn-primary py-3 px-4">Apply Coupon</span></p>
                     </div>
                     <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
                         <div class="cart-total mb-3">
@@ -90,7 +95,7 @@
                             <h3>Cart Totals</h3>
                             <p class="d-flex">
                                 <span>Subtotal</span>
-                                <span>$20.60</span>
+                                <span>${{ getSubtotal }}</span>
                             </p>
                             <p class="d-flex">
                                 <span>Delivery</span>
@@ -98,12 +103,12 @@
                             </p>
                             <p class="d-flex">
                                 <span>Discount</span>
-                                <span>$3.00</span>
+                                <span>${{ discount }}</span>
                             </p>
                             <hr>
                             <p class="d-flex total-price">
                                 <span>Total</span>
-                                <span>$17.60</span>
+                                <span>${{(getSubtotal - discount).toFixed(2) }}</span>
                             </p>
                         </div>
                         <p><router-link :to="{ name: 'checkout' }" class="btn btn-primary py-3 px-4">Proceed to Checkout</router-link></p>
@@ -127,22 +132,39 @@
         carts: [],
         cartProds: [],
         cart: [],
-        price: 0
+        price: 0,
+        total: 0,
+        couponCode: null,
       }
     },
     computed: {
-      ...mapGetters(['getCart', 'getCartProductsIds', 'getProductsByIds', 'getProductById']),
-    },
-    methods: {
-      ...mapActions(['fetchProductsByIds']),
-      ...mapMutations(['addToCart', 'changeQuantity']),
-      signalChange: function(evt) {
-        this.$emit("change", evt);
-        this.changeQuantity({ id: evt.target.getAttribute('data-id'), quantity: evt.target.value})
+      ...mapGetters(['getCart', 'getCartProductsIds', 'getProductsByIds', 'getProductById', 'getSubtotal', 'getCoupon']),
+      discount: function () {
+        if (this.getCoupon !== null) {
+          if (this.getCoupon.type == 'fixed') {
+            return this.getCoupon.amount
+          } else {
+            return this.getSubtotal * this.getCoupon.amount / 100
+          }
+      } else {
+          return 0
+        }
       }
     },
-    beforeMount() {
+    methods: {
+      ...mapActions(['fetchProductsByIds', 'fetchCouponBycCode']),
+      ...mapMutations(['addToCart', 'changeQuantity','setSubtotal']),
+      signalChange: function(evt) {
+        this.$emit("change", evt);
+        this.changeQuantity({ id: evt.target.getAttribute('data-id'), quantity: evt.target.value, price: evt.target.getAttribute('data-price'),})
+      },
+      applyCoupon() {
+        this.fetchCouponBycCode(this.couponCode)
+      }
+    },
+    mounted() {
       this.fetchProductsByIds(this.getCartProductsIds)
+      this.setSubtotal()
     }
   }
 </script>
